@@ -13,3 +13,8 @@ deploy the app. If you forget the dot, delete the files and folders that were cr
 ## Creating database
 
 run python manage.py migrate to create the db or make some changes
+
+
+## Creating apps 
+'''python manage.py startapp learning_logs'''
+
