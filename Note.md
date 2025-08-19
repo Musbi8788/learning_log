@@ -18,3 +18,5 @@ run python manage.py migrate to create the db or make some changes
 ## Creating apps 
 '''python manage.py startapp learning_logs'''
 
+## Creating superuser
+'''python manage.py creatsuperuser'''
