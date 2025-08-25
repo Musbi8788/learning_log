@@ -6,7 +6,7 @@ from . import views # import all the route comming for views.py
 
 app_name = 'learning_logs'
 
-urlpattern = [
+urlpatterns = [
     # Home page
     path('', views.index, name='index')
 ]
