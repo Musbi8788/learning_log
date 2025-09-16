@@ -8,6 +8,14 @@
 <p>
     <a href="{% url 'learning_logs:index' %}">Learning Log</a> - 
     <a href="{% url 'learning_logs:topics' %}">Topics</a>
+    
+    {# check if the user is authenticatd and greet them by their name else ask them to login #}
+
+    {% if user.is_authenticated %}
+        Hello, {{ user.username }}.
+    {% else %}
+        <a href="{% url 'users:login' %}">Log in</a>
+    {% endif %}
 </p>
 
 {% block content %}
