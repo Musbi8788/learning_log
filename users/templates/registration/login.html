@@ -8,6 +8,6 @@
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Log In</button>
-        <input type="hidden" name="next" value="{% url 'learning_logs:index' %}"> {# name='next' tell django where so redirect user after thy login #}
+        <input type="hidden" name="next" value="{% url 'learning_logs:index' %}"> {# name='next' tell django where to redirect user after they login #}
     </form>
 {% endblock %}
