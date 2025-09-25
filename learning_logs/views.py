@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.http import Http404
 
 
 from .models import Entry, Topic
@@ -14,7 +15,7 @@ def index(request):
 @login_required
 def topics(request):
     """Show all topics"""
-    topics = Topic.objects.order_by('data_added') # sort the topics by date
+    topics = Topic.objects.filter(owner=request.user).order_by('data_added') # sort the topics by date # make each user see only their own data.
     context = {'topics': topics}
     return render(request, "learning_logs/topics.html", context)
 
@@ -22,6 +23,9 @@ def topics(request):
 def topic(request, topic_id):
     """Show a single topic and all it entries."""
     topic = Topic.objects.get(id=topic_id)
+    # Make sure the topic belown to the user.
+    if topic.owner != request.user:
+        raise Http404
     entries = topic.entry_set.order_by('-data_added')
     context = {'topic': topic, 'entries': entries}
     return render(request, "learning_logs/topic.html", context)
@@ -35,7 +39,10 @@ def new_topic(request):
     else:
         form = TopicForm(data=request.POST) # store the user info in topicform
         if form.is_valid(): # check if the form is valid
-            form.save() # save form
+            # Associate topic ownership to users
+            new_topic = form.save(commit=False)
+            new_topic.owner = request.user
+            new_topic.save() # save form
             return redirect("learning_logs:topics") # send the user back to topics page
     # Display a blank or invalid form
     context = {'form': form}
@@ -65,6 +72,8 @@ def edit_entry(request, entry_id):
     """Edit an existing entry"""
     entry = Entry.objects.get(id=entry_id) # get the topic entry user's what to edit
     topic = entry.topic 
+    if topic.owner != request.user:
+        raise Http404
 
     if request.method != "POST":
         # Initial request; pre-fill form with the current entry.
