@@ -8,6 +8,15 @@ from .forms import TopicForm, EntryForm
 
 # Create your views here.
 
+
+def check_topic_owner(request, topic_id):
+    """Match topic with their assocaite user."""
+    topic = Topic.objects.get(id=topic_id)
+    # Make sure the topic belown to the user.
+    if topic.owner != request.user:
+        raise Http404
+    return topic
+
 def index(request):
     """The home page for Learning Log."""
     return render(request, "learning_logs/index.html")
@@ -22,10 +31,8 @@ def topics(request):
 @login_required
 def topic(request, topic_id):
     """Show a single topic and all it entries."""
-    topic = Topic.objects.get(id=topic_id)
-    # Make sure the topic belown to the user.
-    if topic.owner != request.user:
-        raise Http404
+    topic = check_topic_owner(request, topic_id)
+
     entries = topic.entry_set.order_by('-data_added')
     context = {'topic': topic, 'entries': entries}
     return render(request, "learning_logs/topic.html", context)
@@ -52,7 +59,7 @@ def new_topic(request):
 @login_required
 def new_entry(request, topic_id):
     """Add a new entry for a particular topic"""
-    topic = Topic.objects.get(id=topic_id) # get the correct topic id
+    topic = check_topic_owner(request, topic_id) # get the correct topic id
     if request.method != "POST":
         # No data submitted; create a blank form.
         form = EntryForm() # create an instand form
@@ -61,6 +68,7 @@ def new_entry(request, topic_id):
         form = EntryForm(data=request.POST)
         if form.is_valid():
             new_entry = form.save(commit=False) # store the entry without saving it yet to the database 
+            
             new_entry.topic = topic # add the entry to the particular topic
             new_entry.save() # Save the entry to it associated topic
             return redirect("learning_logs:topic", topic_id=topic_id) # redirect user the exact topic url
