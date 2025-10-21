@@ -1,26 +1,22 @@
+{% load bootstrap4 %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, strink-to-fit=no">
     <title>Learning Log</title>
+
+    {% bootstrap_css %}
+    {% bootstrap_javascript jquery='full' %}
 </head>
 <body>
-<p>
-    <a href="{% url 'learning_logs:index' %}">Learning Log</a> - 
-    <a href="{% url 'learning_logs:topics' %}">Topics</a> -
-
-    {# check if the user is authenticatd and greet them by their name else ask them to login #}
-
-    {% if user.is_authenticated %}
-        Hello, {{ user.username.title }}.
-        <a href="{% url 'users:logout' %}">Log out</a> - {# Fixed me by googling #}
-    {% else %}
-        <a href="{% url 'users:register' %}">Register</a> -
-        <a href="{% url 'users:login' %}">Log in</a>
-    {% endif %}
-</p>
-
-{% block content %}
-{% endblock content %}
+    <nav class="navbar navbar-expand-md navbar-light bg-light mb-4 border">
+    <a class="navbar-brand" href="{% url 'learning_logs:index'%}">
+    Learning Log</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse"
+    data-target="#navbarCollapse" aria-controls="navbarCollapse"
+    aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span></button>
+    
 </body>
 </html>
