@@ -10,4 +10,5 @@ urlpatterns = [
     path('',  include('django.contrib.auth.urls')), # render default django authentication urls eg login & logout.
     # Registration page
     path('register/', views.register, name='register'),
+    path('users/logout/', views.logout_view, name='logout'),
 ]
