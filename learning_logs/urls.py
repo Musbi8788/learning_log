@@ -19,4 +19,7 @@ urlpatterns = [
     path('new_entry/<int:topic_id>/', views.new_entry, name='new_entry'), # Link each new entry by their topic
     # Page for editing an entry
     path('edit_entry/<int:entry_id>/', views.edit_entry, name='edit_entry'),
+    path('edit_topic/<int:topic_id>/', views.edit_topic, name='edit_topic'),
+    path('delete_entry/<int:entry_id>/', views.delete_entry, name='delete_entry'),
+    path('delete_topic/<int:topic_id>/', views.delete_topic, name='delete_topic'),
 ]
