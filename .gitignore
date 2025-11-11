@@ -1,3 +1,7 @@
 .idea/
 *.pyc
 __pycache__/
+ll_env
+*.sqlite3
+db.sqlite3
+Note.md
