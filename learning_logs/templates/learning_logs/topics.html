@@ -9,7 +9,12 @@
 {% block content %}
 <ul>
     {% for topic in topics %}
-        <li><h3><a href="{% url 'learning_logs:topic'  topic.id%}">{{ topic }} </a></h3></li>
+        <li><h3><a href="{% url 'learning_logs:topic'  topic.id%}">{{ topic }} </a></h3> 
+            <small><a href="{% url 'learning_logs:edit_topic' topic.id %}" class="btn btn-primary">Edit Topic</a></small>
+            <small>
+            <a href="{% url 'learning_logs:delete_topic' topic.id %}" class="btn btn-danger">Delete Topic</a>
+        </small>
+        </li>
     {% empty %}
         <li><h3>No topic have been added yet.</h3></li>
     {% endfor %}
