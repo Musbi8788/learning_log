@@ -1,5 +1,9 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
+ll_env
+*.sqlite3
+db.sqlite3
+Note.md
 *.py[codz]
 *$py.class
 
