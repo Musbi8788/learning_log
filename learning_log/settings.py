@@ -30,8 +30,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-3^*2hd7n(^k(lj7j8=a0$)=!am=zdznd58+ttuncumk6a(1k-y'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+
 
 ALLOWED_HOSTS = []
 
@@ -148,3 +147,10 @@ LOGOUT_REDIRECT_URL = '/'
 # Heroku settings
 import django_heroku
 django_heroku.settings(locals())
+
+# SECURITY WARNING: don't run with debug turned on in production!
+
+if os.environ.get('DEBUG') == True:
+    DEBUG = True
+elif os.environ.get('DEBUG') == False:
+    DEBUG = False
