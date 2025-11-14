@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 
-
 from pathlib import Path
 import os
 from dotenv import load_dotenv
@@ -30,9 +29,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-3^*2hd7n(^k(lj7j8=a0$)=!am=zdznd58+ttuncumk6a(1k-y'
 
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = os.environ.get('DEBUG', 'True').lower() == 'false'
 
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -68,7 +69,7 @@ ROOT_URLCONF = 'learning_log.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'] ,# this change tell djanog to look at the root directory error page
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -94,7 +95,7 @@ DATABASES = {
         ssl_require=True
     )
 }
-print(os.getenv("DATABASE_URL"),)
+
 
 
 
@@ -144,13 +145,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = 'users:login'
 LOGOUT_REDIRECT_URL = '/'
 
-# Heroku settings
-import django_heroku
-django_heroku.settings(locals())
+# Heroku settings - The functionality of django_heroku is now integrated directly.
+# No need for django_heroku.settings(locals())
 
 # SECURITY WARNING: don't run with debug turned on in production!
-
-if os.environ.get('DEBUG') == True:
-    DEBUG = True
-elif os.environ.get('DEBUG') == False:
-    DEBUG = False
