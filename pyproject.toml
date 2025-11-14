@@ -9,4 +9,5 @@ dependencies = [
     "django>=5.2.7",
     "psycopg2-binary>=2.9.11",
     "python-decouple>=3.8",
+    "python-dotenv>=1.2.1",
 ]
